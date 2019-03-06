@@ -1,0 +1,53 @@
+.avatarBox {
+  width: 750rx;
+  height: 140rpx;
+  margin: 24rpx;
+}
+
+.avatar {
+  width: 100rpx;
+  height: 100rpx;
+  top: 20rpx;
+  border-radius: 100rpx;
+  background-size: 110% 110%;
+  background-position: center center;
+}
+
+.nickName {
+  width: 300rpx;
+  height: 54rpx;
+}
+
+.image {
+  width: 80rpx;
+  height: 80rpx;
+}
+
+.card {
+  width: 160rpx;
+}
+
+.addBtn {
+  width: 100rpx;
+  height: 60rpx;
+  position: fixed;
+  right: 6rpx;
+  bottom: 6rpx;
+  border-top-left-radius: 90rpx;
+  border-top-right-radius: 90rpx;
+  background-size: 100% 100%;
+  background-position: bottom right;
+  background-color: rgb(247, 247, 247);
+}
+
+.actionPopup {
+  width: 600rpx;
+  height: 120rpx;
+}
+
+.toolPopup {
+  width:400rpx;
+  height:400rpx;
+  position: relative
+}
+

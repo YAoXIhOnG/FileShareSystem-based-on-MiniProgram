@@ -1,0 +1,13 @@
+<view class="avatarBox">
+  <button class="avatar" style="background-image: url({{avatarUrl}})" class='avatar' open-type='getUserInfo' bindgetuserinfo='onGetUserInfo'></button>
+</view>
+<view class="nickName">{{userInfo.nickName}}</view>
+
+<view class="enterBtn">
+<button 
+type="primary"
+bindtap='navigateTo'
+>进入我的网盘</button>
+</view>
+
+<van-dialog id="van-dialog" />

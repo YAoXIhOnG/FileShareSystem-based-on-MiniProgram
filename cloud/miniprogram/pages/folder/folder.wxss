@@ -1,0 +1,21 @@
+.image {
+  width: 80rpx;
+  height: 80rpx;
+}
+
+.card {
+  width: 160rpx;
+}
+
+.addBtn {
+  width: 100rpx;
+  height: 60rpx;
+  position: fixed;
+  right: 6rpx;
+  bottom: 6rpx;
+  border-top-left-radius: 90rpx;
+  border-top-right-radius: 90rpx;
+  background-size: 100% 100%;
+  background-position: bottom right;
+  background-color: rgb(247, 247, 247);
+}

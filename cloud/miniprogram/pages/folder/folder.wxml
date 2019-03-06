@@ -1,0 +1,22 @@
+<view style='background-color:#f6f6f6;display:flex;flex-direction:row-reverse;align-items:center;height:90rpx;'>
+  <view style="width:90rpx;height:90rpx;display: flex;align-items:center;">
+    <van-icon name="plus" size="70rpx" bind:click="onActionShow" />
+  </view>
+  <view style="width:90rpx;height:90rpx;display: flex;align-items:center;">
+    <van-icon name="search" size="70rpx" bind:click="onSeachShow" />
+  </view>
+  <view style='width:540rpx;position:relative;left:3rpx;font-size:40rpx;'>我的文件</view>
+</view>
+
+<van-panel style="font-size:medium;">
+  <van-row class="imageBox">
+    <van-col span="22">
+      <navigator url="../photo/photo?id=123" style="margin:7rpx">
+        <van-card style="background-color:#fffff;" class="card" title="我的视频" thumb-class="image" thumb="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3710180907,1493414966&fm=26&gp=0.jpg" />
+      </navigator>
+    </van-col>
+    <van-col span="2">
+      <van-checkbox style="position:relative;top:28rpx;" value="{{ result }}" bind:change="onChange" />
+    </van-col>
+  </van-row>
+</van-panel>

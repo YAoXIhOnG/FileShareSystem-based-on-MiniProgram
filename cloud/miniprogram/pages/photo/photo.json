@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "van-button": "../../vant-weapp/button/index",
+    "van-nav-bar": "../../vant-weapp/nav-bar/index",
+    "van-search": "../../vant-weapp/search/index"
+  }
+}

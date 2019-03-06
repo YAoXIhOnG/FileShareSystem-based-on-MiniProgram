@@ -1,0 +1,21 @@
+.avatarBox {
+  width:750rpx;
+  height: 180rpx;
+  padding-top: 100rpx;
+}
+.avatar {
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 150rpx;
+  background-size: 110% 110%;
+  background-position: center center;
+}
+.nickName {
+  width: 750rpx;
+  height: 160rpx;
+  text-align: center;
+}
+.enterBtn{
+  display: flex;
+  justify-content: center;
+}

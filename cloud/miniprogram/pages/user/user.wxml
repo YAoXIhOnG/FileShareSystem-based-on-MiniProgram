@@ -1,0 +1,57 @@
+<view class="avatarBox">
+  <van-row>
+    <van-col span="4">
+      <button class="avatar" style="background-image: url({{avatarUrl}})" class='avatar' open-type='getUserInfo' bindgetuserinfo='onGetUserInfo'></button>
+    </van-col>
+    <van-col span="20">
+      <van-row style="position: relative;top:24rpx;">
+        <view class="nickName">{{userInfo.nickName}}</view>
+      </van-row>
+      <van-row style="position: relative;top:36rpx;">
+        <van-col span="3">
+          <view style="font-size:10px;font-color:#fafafa;align:center;">容   量</view>
+        </van-col>
+        <van-col span="21">
+          <view style="width:540rpx;margin:14rpx">
+            <van-progress color="#f44" percentage="50" pivot-text="500/1000M" />
+          </view>
+        </van-col>
+      </van-row>
+    </van-col>
+  </van-row>
+</view>
+
+<view style='background-color:#f6f6f6;display:flex;flex-direction:row-reverse;align-items:center;height:90rpx;'>
+  <view style="width:90rpx;height:90rpx;display: flex;align-items:center;">
+    <van-icon name="plus" size="70rpx" bind:click="onActionShow" />
+  </view>
+  <view style="width:90rpx;height:90rpx;display: flex;align-items:center;">
+    <van-icon name="search" size="70rpx" bind:click="onSeachShow" />
+  </view>
+  <view style='width:540rpx;position:relative;left:3rpx;font-size:40rpx;'>我的文件</view>
+</view>
+
+<van-panel style="font-size:medium;">
+  <van-row class="imageBox">
+    <van-col span="22">
+      <navigator url="../folder/folder?id=123" style="margin:7rpx">
+        <van-card style="background-color:#fffff;" class="card" title="我的视频" thumb-class="image" thumb="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3710180907,1493414966&fm=26&gp=0.jpg" />
+      </navigator>
+    </van-col>
+    <van-col span="2">
+      <van-checkbox style="position:relative;top:28rpx;" value="{{ result }}" bind:change="onChange" />
+    </van-col>
+  </van-row>
+</van-panel>
+
+<van-popup position="right" overlay-style="background-color: rgba(0,0,0,.5);" show="{{ seachShow }}" bind:close="onSeachClose">
+  <view style='width:750rpx;height:1182rpx;'>
+    <van-search value="{{ value }}" focus="ture" placeholder="请输入搜索关键词" />
+    <button bindtap="onSeachClose">关闭</button>
+  </view>
+</van-popup>
+
+<van-popup position="bottom" custom-style="" overlay-style="background-color: rgba(0,0,0,.5);" show="{{ actionShow }}" bind:close="onActionClose">
+  <view class="actionPopup">
+  </view>
+</van-popup>

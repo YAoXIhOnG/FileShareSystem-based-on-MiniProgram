@@ -22,6 +22,8 @@ Page({
     logged: false,
     //选择框参数
     result: [],
+    resultAll: [],
+    chooseAll: "全选",
     //查询所得数据
     file: [],
     fileSearch: [],
@@ -43,8 +45,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(optins) {
-    app.globalData.currentFolderId="root"
-    app.globalData.currentFolder="我的文件"
+    app.globalData.currentFolderId = "root"
+    app.globalData.currentFolder = "我的文件"
     wx.getSetting({
       success: res => {
         if (res.authSetting['scope.userInfo']) {
@@ -72,6 +74,9 @@ Page({
         for (let i = 0; i < res.data.length; i++) {
           var time = res.data[i].upLoadTime.getTime() - res.data[i].upLoadTime.getTimezoneOffset() * 60000
           res.data[i].upLoadTime = new Date(time).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+          this.setData({
+            resultAll: this.data.resultAll.concat(res.data[i]._id)
+          })
         }
         this.setData({
           file: res.data
@@ -92,9 +97,9 @@ Page({
           this.setData({
             color: "#f44"
           })
-        }else{
+        } else {
           this.setData({
-            color:"#1989fa"
+            color: "#1989fa"
           })
         }
         if (this.data.percentage == 100) {
@@ -216,11 +221,12 @@ Page({
   //popup
   onSearchClose() {
     this.setData({
-      searchShow: false
+      searchShow: false,
+      fileSearch: [],
+      resultAll:[],
+      count:0
     });
-    this.setData({
-      fileSearch: []
-    })
+    this.onLoad();
   },
   onSearchShow() {
     this.setData({
@@ -409,7 +415,7 @@ Page({
                     console.log("addImage")
                     this.f5();
                   },
-                  fail:err=>{
+                  fail: err => {
                     console.err
                   }
                 })
@@ -432,10 +438,10 @@ Page({
       success: res => {
         console.log(res)
         var type = ''
-        for(var j=res.tempFilePath.length;j>=0;j--){
-          if(res.tempFilePath[j]=='.'){
-            for(;j<res.tempFilePath.length;j++){
-              type =  type+res.tempFilePath[j]
+        for (var j = res.tempFilePath.length; j >= 0; j--) {
+          if (res.tempFilePath[j] == '.') {
+            for (; j < res.tempFilePath.length; j++) {
+              type = type + res.tempFilePath[j]
             }
             break;
           }
@@ -464,7 +470,7 @@ Page({
               father: app.globalData.currentFolderId,
               fileIcon: res.thumbTempFilePath,
               fileId: res1.fileID,
-              fileName: name+type,
+              fileName: name + type,
               fileSize: res.size,
               fileType: "4video",
               upLoadTime: new Date(),
@@ -517,6 +523,7 @@ Page({
                 newchild[j] = newchild[j + 1]
               }
               newchild[newchild.length - 1] = ""
+              break;
             }
           }
           db.collection("File").doc(res.data.father).update({
@@ -650,8 +657,28 @@ Page({
       }
     })
   },
+  //全选功能
+  onChooseAll(event) {
+    if (this.data.chooseAll === "全选") {
+      this.setData({
+        result: this.data.resultAll,
+        chooseAll: "取消",
+        count:this.data.resultAll.length
+      })
+    } else if (this.data.chooseAll === "取消") {
+      this.setData({
+          result: [],
+          chooseAll: "全选",
+          actionShow:false,
+          count:0
+      })
+    }
+  },
   //搜素功能
   onSearch(event) {
+    this.setData({
+      resultAll: []
+    })
     const db = wx.cloud.database();
     db.collection("File").where({
       _openid: app.globalData.currentFolderId,
@@ -664,6 +691,9 @@ Page({
         for (let i = 0; i < res.data.length; i++) {
           var time = res.data[i].upLoadTime.getTime() - res.data[i].upLoadTime.getTimezoneOffset() * 60000
           res.data[i].upLoadTime = new Date(time).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+          this.setData({
+            resultAll: this.data.resultAll.concat(res.data[i]._id)
+          })
         }
         this.setData({
           fileSearch: res.data
@@ -671,7 +701,7 @@ Page({
       }
     })
   },
-  f5(event){
+  f5(event) {
     this.onLoad();
   }
 })

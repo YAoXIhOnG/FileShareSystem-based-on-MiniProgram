@@ -72,11 +72,6 @@
   </view>
 </van-popup>
 
-
-<van-popup position="top" overlay="{{false}}" show="{{ actionShow }}" bind:close="onActionClose">
-  <view class="actionPopupTop">aaaaa</view>
-</van-popup>
-
 <van-popup position="bottom" z-index="100" custom-style="" overlay-style="background-color: rgba(0,0,0,.5);" show="{{ toolShow }}" bind:close="onToolClose">
   <view class="toolPopup">
     <button bindtap="onshowCreateFile">新建文件夹</button>
@@ -95,7 +90,10 @@
   </view>
 </van-popup>
 <van-popup position="top" z-index="101" overlay="{{false}}" show="{{ actionShow }}" bind:close="onActionClose">
-  <view class="actionPopupTop">aaaaa</view>
+  <view class="actionPopupTop"  style='background-color:#f6f6f6;display:flex;flex-direction:row;align-items:center;'>
+  <view style='left:30rpx;width:660rpx;position:relative;display:flex;flex-direction:row;align-items:center;'>已选择{{count}}个文件</view>
+  <view style='color:#1989fa;' bindtap='onChooseAll'>{{chooseAll}}</view>
+  </view>
 </van-popup>
 
 <van-dialog use-slot async-close show="{{ showCreateFile }}" show-cancel-button bind:confirm="createFolder" bind:close="oncloseCreateFile">

@@ -1,7 +1,7 @@
 // pages/file/file.js
 Page({
 
-  /**
+  /** 
    * 页面的初始数据
    */
   data: { 
@@ -106,7 +106,7 @@ Page({
             })
           }
           if (this.data.type == "5else") {
-
+            
           }
         },
         fail: console.error

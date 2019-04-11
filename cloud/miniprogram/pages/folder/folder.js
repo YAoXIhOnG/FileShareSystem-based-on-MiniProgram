@@ -1,6 +1,6 @@
 // pages/folder/folder.js
 const app = getApp();
-
+ 
 Page({
   /**
    * 页面的初始数据 
@@ -20,6 +20,8 @@ Page({
     fileSearch: [],
     //选择框参数
     result: [],
+    resultAll: [],
+    chooseAll: "全选",
     //当前目录
     currentFolder: '',
     //新文件夹参数
@@ -58,6 +60,9 @@ Page({
         for (let i = 0; i < res.data.length; i++) {
           var time = new Date(res.data[i].upLoadTime).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
           res.data[i].upLoadTime = time
+          this.setData({
+            resultAll: this.data.resultAll.concat(res.data[i]._id)
+          })
         }
         this.setData({
           file: res.data
@@ -139,8 +144,15 @@ Page({
   },
   onSearchClose() {
     this.setData({
-      searchShow: false
+      searchShow: false,
+      fileSearch: [],
+      resultAll: [],
+      count: 0
     });
+    var options = {
+      id: app.globalData.currentFolderId
+    }
+    this.onLoad(options);
   },
   onSearchShow() {
     this.setData({
@@ -430,6 +442,7 @@ Page({
                 newchild[j] = newchild[j + 1]
               }
               newchild[newchild.length - 1] = ""
+              break;
             }
           }
           db.collection("File").doc(res.data.father).update({
@@ -570,9 +583,28 @@ Page({
       }
     })
   },
+  //全选功能
+  onChooseAll(event) {
+    if (this.data.chooseAll === "全选") {
+      this.setData({
+        result: this.data.resultAll,
+        chooseAll: "取消",
+        count: this.data.resultAll.length
+      })
+    } else if (this.data.chooseAll === "取消") {
+      this.setData({
+        result: [],
+        chooseAll: "全选",
+        actionShow: false,
+        count: 0
+      })
+    }
+  },
   //搜素功能
   onSearch(event) {
-    console.log(event)
+    this.setData({
+      resultAll: []
+    })
     const db = wx.cloud.database();
     db.collection("File").where({
       _openid: app.globalData.currentFolderId,
@@ -585,6 +617,9 @@ Page({
         for (let i = 0; i < res.data.length; i++) {
           var time = res.data[i].upLoadTime.getTime() - res.data[i].upLoadTime.getTimezoneOffset() * 60000
           res.data[i].upLoadTime = new Date(time).toISOString().replace(/T/g, ' ').replace(/\.[\d]{3}Z/, '')
+          this.setData({
+            resultAll: this.data.resultAll.concat(res.data[i]._id)
+          })
         }
         this.setData({
           fileSearch: res.data

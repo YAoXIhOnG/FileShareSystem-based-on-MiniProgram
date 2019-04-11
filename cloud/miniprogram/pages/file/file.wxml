@@ -1,0 +1,16 @@
+<view wx-if="{{type == '2image'}}">
+<image class="headImage" src="{{file}}" mode="aspectFit"></image>
+</view>
+<view wx-if="{{type == '3audio'}}">
+<audio src="{{fileId}} controls"></audio>
+</view>
+<view wx-if="{{type == '4video'}}">
+<video src="{{fileId}}" controls></video>
+</view>
+<view wx-if="{{type == '5else'}}"> 
+<image class="headImage" src="{{file}}" mode="aspectFit"></image>
+</view>
+<view style='padding:0rpx 40rpx'>
+<van-button type="primary" plain block class="button" bindtap="download">下载至本地</van-button>
+<van-button type="primary" plain block class="button" bindtap="share">分享</van-button>
+</view> 

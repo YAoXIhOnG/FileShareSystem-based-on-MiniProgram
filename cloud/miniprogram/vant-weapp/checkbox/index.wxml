@@ -4,7 +4,7 @@
   <view class="van-checkbox__icon-wrap" bindtap="toggle">
     <slot wx:if="{{ useIconSlot }}" name="icon" />
     <van-icon
-      wx:else
+      wx:else 
       name="success"
       class="{{ utils.bem('checkbox__icon', [shape, { disabled, checked: value }]) }}"
       style="{{ checkedColor && value && !disabled ? 'border-color:' + checkedColor + '; background-color:' + checkedColor : '' }}"

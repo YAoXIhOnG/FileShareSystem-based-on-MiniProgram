@@ -1,10 +1,14 @@
-import { VantComponent } from '../common/component';
-import { BLUE } from '../common/color';
+import {
+  VantComponent
+} from '../common/component';
+import {
+  BLUE
+} from '../common/color';
 VantComponent({
   props: {
     inactive: Boolean,
     percentage: Number,
-    pivotText: String,
+    pivotText: String, 
     pivotColor: String,
     showPivot: {
       type: Boolean,
@@ -29,14 +33,19 @@ VantComponent({
   },
   computed: {
     portionStyle: function portionStyle() {
-      var width = (this.data.progressWidth - this.data.pivotWidth) * this.data.percentage / 100 + 'px';
+      var width = this.data.progressWidth * this.data.percentage / 100 + 'px';
       var background = this.getCurrentColor();
       return "width: " + width + "; background: " + background + "; ";
     },
     pivotStyle: function pivotStyle() {
       var color = this.data.textColor;
       var background = this.data.pivotColor || this.getCurrentColor();
-      return "color: " + color + "; background: " + background;
+      
+      var left = (this.data.progressWidth * this.data.percentage /200 - 112/2) + 'px';
+      if ((this.data.progressWidth * this.data.percentage / 100) < 112) {
+        left = "0px"
+      };
+      return "color: " + color + "; background: " + background + "; left: " + left + ";";
     },
     text: function text() {
       return this.data.pivotText || this.data.percentage + '%';
@@ -52,12 +61,12 @@ VantComponent({
     getWidth: function getWidth() {
       var _this = this;
 
-      this.getRect('.van-progress').then(function (rect) {
+      this.getRect('.van-progress').then(function(rect) {
         _this.set({
           progressWidth: rect.width
         });
       });
-      this.getRect('.van-progress__pivot').then(function (rect) {
+      this.getRect('.van-progress__pivot').then(function(rect) {
         _this.set({
           pivotWidth: rect.width || 0
         });

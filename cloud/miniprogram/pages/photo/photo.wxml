@@ -1,7 +1,0 @@
-<van-search value="{{ value }}" placeholder="请输入搜索关键词" />
-
-<image class="headImage" src="https://developers.weixin.qq.com/miniprogram/dev/image/cat/0.jpg?t=19021918" mode="aspectFill"></image>
-<view style='padding:0rpx 40rpx'>
-<van-button type="primary" plain block class="button" bindtap="download">下载至本地</van-button>
-<van-button type="primary" plain block class="button" bindtap="share">分享</van-button>
-</view>

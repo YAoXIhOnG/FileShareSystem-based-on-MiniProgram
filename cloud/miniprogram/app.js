@@ -1,5 +1,11 @@
 App({
-
+  globalData:{
+    openid:"",
+    spaceUsed:0,
+    totalSpace:0,
+    currentFolder:"我的文件",
+    currentFolderId:"root"
+  },
   /**
    * 当小程序初始化完成时，会触发 onLaunch（全局只触发一次）
    */

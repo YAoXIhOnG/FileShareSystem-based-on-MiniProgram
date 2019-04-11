@@ -4,11 +4,12 @@
     style="{{ portionStyle }}"
   >
     <view
+      id='text'
       wx:if="{{ showPivot && text }}"
       style="{{ pivotStyle }}"
       class="van-progress__pivot"
     >
-      {{ text }}
+      {{ text }}  
     </view>
   </view>
 </view>

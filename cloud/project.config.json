@@ -37,24 +37,24 @@
 					"query": ""
 				},
 				{
-					"id": -1,
-					"name": "photo",
-					"pathName": "pages/photo/photo",
-					"query": "id=123",
-					"scene": null
-				},
-				{
-					"id": -1,
+					"id": 2,
 					"name": "user",
 					"pathName": "pages/user/user",
-					"query": "id=123",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 3,
+					"name": "folder",
+					"pathName": "pages/folder/folder",
+					"query": "id=0",
 					"scene": null
 				},
 				{
 					"id": -1,
-					"name": "folder",
-					"pathName": "pages/folder/folder",
-					"query": "id=123",
+					"name": "file",
+					"pathName": "pages/file/file",
+					"query": "id=1&name=图片1&type=2image&file=cloud://minicloud-3e0f6c.6d69-minicloud-3e0f6c/oW2-f4nDwSIDsLe_QqmI9pfPQVCY/image/6553.914173576903.jpeg",
 					"scene": null
 				}
 			]

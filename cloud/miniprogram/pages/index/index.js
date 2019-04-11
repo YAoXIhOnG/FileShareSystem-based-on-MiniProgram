@@ -7,7 +7,9 @@ Page({
    */
   data: {
     avatarUrl: './user-unlogin.png',
-    userInfo: {nickName:"点击头像登陆"},
+    userInfo: {
+      nickName: "点击头像登陆"
+    },
     logged: false,
     openId: ''
   },
@@ -35,15 +37,17 @@ Page({
             name: 'login',
             data: {},
             success: res => {
-              console.log('[云函数] [login] user openid: ', res.result.openid)
-              this.setData({
-                openId: res.result.openid
+              // console.log('[云函数] [login] user openid: ', res.result.openid)
+              app.globalData.openid=res.result.openid
+              wx.redirectTo({
+                url: '../user/user',
               })
             },
             fail: err => {
               console.error('[云函数] [login] 调用失败', err)
             }
           })
+
         }
       }
     })
@@ -97,13 +101,13 @@ Page({
   onShareAppMessage: function() {
 
   },
-  navigateTo: function (event) {
+  navigateTo: function(event) {
     wx.getSetting({
       success: res => {
         if (res.authSetting['scope.userInfo']) {
           var that = this;
           that.onGetOpenid();
-          wx.navigateTo({
+          wx.redirectTo({
             url: '../user/user',
           })
         } else {

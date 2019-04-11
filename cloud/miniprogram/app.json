@@ -2,8 +2,8 @@
   "pages": [
     "pages/index/index",
     "pages/user/user",
-    "pages/photo/photo",
-    "pages/folder/folder"
+    "pages/folder/folder",
+    "pages/file/file"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

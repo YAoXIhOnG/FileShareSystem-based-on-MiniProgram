@@ -1,22 +1,107 @@
-<view style='background-color:#f6f6f6;display:flex;flex-direction:row-reverse;align-items:center;height:90rpx;'>
-  <view style="width:90rpx;height:90rpx;display: flex;align-items:center;">
-    <van-icon name="plus" size="70rpx" bind:click="onActionShow" />
+<view style='background-color:#f6f6f6;display:flex;flex-direction:row;align-items:center;height:80rpx;'>
+  <view style='left:30rpx;width:600rpx;position:relative;font-size:35rpx;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;'>{{currentFolder}}</view>
+  <view style="width:80rpx;height:80rpx;display: flex;align-items:center;">
+    <van-icon name="replay" size="60rpx" bind:click="f5" />
   </view>
-  <view style="width:90rpx;height:90rpx;display: flex;align-items:center;">
-    <van-icon name="search" size="70rpx" bind:click="onSeachShow" />
+  <view style="width:80rpx;height:80rpx;display: flex;align-items:center;">
+    <van-icon name="search" size="60rpx" bind:click="onSearchShow" />
   </view>
-  <view style='width:540rpx;position:relative;left:3rpx;font-size:40rpx;'>我的文件</view>
+  <view style="width:80rpx;height:80rpx;display:flex;align-items:center;">
+    <van-icon name="plus" size="60rpx" bind:click="onToolShow" />
+  </view>
+</view> 
+ 
+<view>
+  <scroll-view scroll-y style="height:{{height}};">
+    <van-panel style="font-size:medium;">
+      <van-checkbox-group value="{{ result }}" bind:change="onChange">
+        <view wx:for="{{file}}" wx:key="property" wx:for-item="item">
+          <van-row>
+            <van-col span="22">
+              <view wx-if="{{item.fileType == '1folder'}}" bindtap="chooseCancel">
+                <navigator url="../folder/folder?id={{item._id}}" style="margin:7rpx">
+                  <van-card style="background-color:#fffff;" class="card" title="{{item.fileName}}" desc="{{item.upLoadTime}}" thumb-class="image" thumb="{{item.fileIcon}}" />
+                </navigator>
+              </view>
+              <view wx-if="{{item.fileType != '1folder'}}" bindtap="chooseCancel">
+                <navigator url="../file/file?id={{item._id}}&name={{item.fileName}}&type={{item.fileType}}&file={{item.fileIcon}}" style="margin:7rpx">
+                  <van-card style="background-color:#fffff;" class="card" title="{{item.fileName}}" desc="{{item.upLoadTime}}" thumb-class="image" thumb="{{item.fileIcon}}" />
+                </navigator>
+              </view>
+            </van-col>
+            <van-col span="2">
+              <van-checkbox style="position:relative;top:36rpx;left:5rpx;" name="{{item._id}}" bindtap="choose" />
+            </van-col>
+          </van-row>
+        </view>
+      </van-checkbox-group>
+    </van-panel>
+  </scroll-view>
 </view>
 
-<van-panel style="font-size:medium;">
-  <van-row class="imageBox">
-    <van-col span="22">
-      <navigator url="../photo/photo?id=123" style="margin:7rpx">
-        <van-card style="background-color:#fffff;" class="card" title="我的视频" thumb-class="image" thumb="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3710180907,1493414966&fm=26&gp=0.jpg" />
-      </navigator>
-    </van-col>
-    <van-col span="2">
-      <van-checkbox style="position:relative;top:28rpx;" value="{{ result }}" bind:change="onChange" />
-    </van-col>
-  </van-row>
-</van-panel>
+<van-popup position="right" z-index="100" overlay-style="background-color: rgba(0,0,0,.5);" show="{{ searchShow }}" bind:close="onSearchClose">
+  <view class='searchPopup'>
+    <van-search value="{{ value }}" placeholder="请输入搜索关键词" show-action bind:search="onSearch" bind:cancel="onSearchClose" />
+    <view>
+      <scroll-view scroll-y style="height:1110rpx;">
+        <van-panel style="font-size:medium;">
+          <van-checkbox-group value="{{ result }}" bind:change="onChange">
+            <view wx:for="{{fileSearch}}" wx:key="property" wx:for-item="item">
+              <van-row>
+                <van-col span="22">
+                  <view wx-if="{{item.fileType == '1folder'}}" bindtap="chooseCancel">
+                    <navigator url="../folder/folder?id={{item._id}}" style="margin:7rpx">
+                      <van-card style="background-color:#fffff;" class="card" title="{{item.fileName}}" desc="{{item.upLoadTime}}" thumb-class="image" thumb="{{item.fileIcon}}" />
+                    </navigator>
+                  </view>
+                  <view wx-if="{{item.fileType != '1folder'}}" bindtap="chooseCancel">
+                <navigator url="../file/file?id={{item._id}}&name={{item.fileName}}&type={{item.fileType}}&file={{item.fileIcon}}" style="margin:7rpx">
+                  <van-card style="background-color:#fffff;" class="card" title="{{item.fileName}}" desc="{{item.upLoadTime}}" thumb-class="image" thumb="{{item.fileIcon}}" />
+                </navigator>
+              </view>
+                </van-col>
+                <van-col span="2">
+                  <van-checkbox style="position:relative;top:36rpx;left:5rpx;" name="{{item._id}}" bindtap="choose" />
+                </van-col>
+              </van-row>
+            </view>
+          </van-checkbox-group>
+        </van-panel>
+      </scroll-view>
+    </view>
+  </view>
+</van-popup>
+
+
+<van-popup position="top" overlay="{{false}}" show="{{ actionShow }}" bind:close="onActionClose">
+  <view class="actionPopupTop">aaaaa</view>
+</van-popup>
+
+<van-popup position="bottom" z-index="100" custom-style="" overlay-style="background-color: rgba(0,0,0,.5);" show="{{ toolShow }}" bind:close="onToolClose">
+  <view class="toolPopup">
+    <button bindtap="onshowCreateFile">新建文件夹</button>
+    <button bindtap="uploadImage">上传图片</button>
+    <button bindtap="uploadVideo">上传视频</button>
+    <button bindtap="uploadFile">上传其他文件</button>
+  </view>
+</van-popup>
+
+<van-popup position="bottom" z-index="101" overlay="{{false}}" show="{{ actionShow }}" bind:close="onActionClose">
+  <view class="actionPopupBottom">
+    <button bindtap="move">移动到……</button>
+    <button bindtap="copy">复制到……</button>
+    <button bindtap="remove">删除</button>
+    <button bindtap="onshowRename" disabled="{{reNameAble}}">重命名</button>
+  </view>
+</van-popup>
+<van-popup position="top" z-index="101" overlay="{{false}}" show="{{ actionShow }}" bind:close="onActionClose">
+  <view class="actionPopupTop">aaaaa</view>
+</van-popup>
+
+<van-dialog use-slot async-close show="{{ showCreateFile }}" show-cancel-button bind:confirm="createFolder" bind:close="oncloseCreateFile">
+  <van-field style="height:200rpx;" value="{{ fileName }}" label="新文件夹名" placeholder="请输入文件夹名" bind:input="onconfirmCreateFile" />
+</van-dialog>
+
+<van-dialog use-slot async-close show="{{ showRename }}" show-cancel-button bind:confirm="rename" bind:close="oncloseRename">
+  <van-field style="height:200rpx;" value="{{ fileName }}" label="新文件夹名" placeholder="请输入文件夹名" bind:input="onconfirmCreateFile" />
+</van-dialog>

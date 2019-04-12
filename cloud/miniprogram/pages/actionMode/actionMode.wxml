@@ -1,0 +1,51 @@
+<view style='background-color:#f6f6f6;display:flex;flex-direction:row;align-items:center;height:80rpx;'>
+  <view style='left:30rpx;width:760rpx;position:relative;font-size:35rpx;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;'>{{currentFolder}}</view>
+  <view style="width:80rpx;height:80rpx;display: flex;align-items:center;">
+    <van-icon name="search" size="60rpx" bind:click="onSearchShow" />
+  </view>
+</view> 
+
+<view>
+  <scroll-view scroll-y style="height:940rpx;">
+    <van-panel style="font-size:medium;">
+        <view wx:for="{{file}}" wx:key="property" wx:for-item="item">
+          <van-row>
+              <view wx-if="{{item.fileType == '1folder'}}">
+                    <navigator url="../actionMode/actionMode?id={{item._id}}&operateType={{operateType}}&operateId={{operateId}}" style="margin:7rpx">
+                      <van-card style="background-color:#fffff;" class="card" title="{{item.fileName}}" desc="{{item.upLoadTime}}" thumb-class="image" thumb="{{item.fileIcon}}" />
+                    </navigator>
+                  </view>
+                  <view wx-if="{{item.fileType != '1folder'}}">
+                  <van-card style="background-color:#fffff;" class="card" title="{{item.fileName}}" desc="{{item.upLoadTime}}" thumb-class="image" thumb="{{item.fileIcon}}" />
+              </view>
+              </van-row>
+        </view>
+    </van-panel>
+  </scroll-view>
+</view>
+<view><button bindtap='do'>{{operateType}}到此处</button></view>
+<view><button bindtap='operateCancel'>取消</button></view>
+
+<van-popup position="right" z-index="100" overlay-style="background-color: rgba(0,0,0,.5);" show="{{ searchShow }}" bind:close="onSearchClose">
+  <view class='searchPopup'>
+    <van-search value="{{ value }}" placeholder="请输入搜索关键词" show-action bind:search="onSearch" bind:cancel="onSearchClose" />
+    <view>
+      <scroll-view scroll-y style="height:940rpx;">
+        <van-panel style="font-size:medium;">
+            <view wx:for="{{fileSearch}}" wx:key="property" wx:for-item="item">
+            <van-row>
+                  <view wx-if="{{item.fileType == '1folder'}}">
+                    <navigator url="../actionMode/actionMode?id={{item._id}}&operateType={{operateType}}&operateId={{operateId}}" style="margin:7rpx">
+                      <van-card style="background-color:#fffff;" class="card" title="{{item.fileName}}" desc="{{item.upLoadTime}}" thumb-class="image" thumb="{{item.fileIcon}}" />
+                    </navigator>
+                  </view>
+                  <view wx-if="{{item.fileType != '1folder'}}">
+                  <van-card style="background-color:#fffff;" class="card" title="{{item.fileName}}" desc="{{item.upLoadTime}}" thumb-class="image" thumb="{{item.fileIcon}}" />
+              </view>
+              </van-row>
+            </view>
+        </van-panel>
+      </scroll-view>
+    </view>
+  </view>
+</van-popup>

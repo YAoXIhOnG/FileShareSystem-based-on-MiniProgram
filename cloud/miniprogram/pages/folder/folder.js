@@ -16,14 +16,14 @@ Page({
     //滑动窗口高度
     height: "1120rpx",
     //查询所得数据
-    file: [],
+    file: [], 
     fileSearch: [],
     //选择框参数
     result: [],
     resultAll: [],
     chooseAll: "全选",
     //当前目录
-    currentFolder: '',
+    currentFolder: "我的文件",
     //新文件夹参数
     showCreateFile: false,
     showRename: false,
@@ -42,16 +42,26 @@ Page({
     wx.setNavigationBarTitle({
       title: " "
     })
-    console.log("currentFloderId:" + options.id)
+    // console.log("currentFloderId:" + options.id)
     app.globalData.currentFolderId = options.id
-    console.log(app.globalData.openid)
     this.setData({
       options:{
         id:options.id
       }
     })
-    console.log(this.data.options.id)
+    // console.log(this.data.options.id)
     const db = wx.cloud.database()
+    db.collection("File").where({
+      _openid: app.globalData.openid,
+      _id: options.id
+    }).get({
+      success: res => {
+        this.setData({
+          currentFolder: res.data[0].fileName
+        })
+        app.globalData.currentFolder = this.data.currentFolder
+      }
+    })
     db.collection("File").where({
       _openid: app.globalData.openid,
       father: options.id
@@ -67,17 +77,6 @@ Page({
         this.setData({
           file: res.data
         })
-      }
-    })
-    db.collection("File").where({
-      _openid: app.globalData.openid,
-      _id: options.id
-    }).get({
-      success: res => {
-        this.setData({
-          currentFolder: res.data[0].fileName
-        })
-        app.globalData.currentFolder = this.data.currentFolder
       }
     })
   },
@@ -431,52 +430,14 @@ Page({
   },
   //文件夹管理功能
   move() {
-    const db = wx.cloud.database();
-    for (var i = 0; i < this.data.result.length; i++) {
-      db.collection("File").doc(this.data.result[i]).get().then(res => {
-        db.collection("File").doc(res.data.father).get().then(res1 => {
-          var newchild = res1.data.child
-          for (var i = 0; i < newchild.length; i++) {
-            if (newchild[i] == res.data._id) {
-              for (var j = 0; j < newchild.length - 1; j++) {
-                newchild[j] = newchild[j + 1]
-              }
-              newchild[newchild.length - 1] = ""
-              break;
-            }
-          }
-          db.collection("File").doc(res.data.father).update({
-            data: {
-              child: newchild
-            }
-          })
-        }).then(res => {
-          console.log("fatherchanged")
-        })
-        db.collection("File").doc(res.data._id).update({
-          data: {
-            father: app.globalData.currentFolderId
-          }
-        }).then(res2 => {
-          console.log("move success")
-        })
-        console.log(app.globalData.currentFolderId)
-      })
-    }
+    wx.redirectTo({
+      url: '../actionMode/actionMode?id=root&operateType=移动&operateId=' + this.data.result,
+    })
   },
   copy() {
-    const db = wx.cloud.database();
-    for (var i = 0; i < this.data.result.length; i++) {
-      db.collection("File").doc(this.data.result[i]).get().then(res => {
-        db.collection("File").add({
-          data: {
-
-          }
-        }).then(res => {
-
-        })
-      })
-    }
+    wx.redirectTo({
+      url: '../actionMode/actionMode?id=root&operateType=复制&operateId=' + this.data.result,
+    })
   },
   remove() {
     const db = wx.cloud.database();

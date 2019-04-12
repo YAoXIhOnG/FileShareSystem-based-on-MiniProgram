@@ -223,8 +223,8 @@ Page({
     this.setData({
       searchShow: false,
       fileSearch: [],
-      resultAll:[],
-      count:0
+      resultAll: [],
+      count: 0
     });
     this.onLoad();
   },
@@ -512,52 +512,26 @@ Page({
   },
   //文件夹管理功能
   move() {
-    const db = wx.cloud.database();
-    for (var i = 0; i < this.data.result.length; i++) {
-      db.collection("File").doc(this.data.result[i]).get().then(res => {
-        db.collection("File").doc(res.data.father).get().then(res1 => {
-          var newchild = res1.data.child
-          for (var i = 0; i < newchild.length; i++) {
-            if (newchild[i] == res.data._id) {
-              for (var j = 0; j < newchild.length - 1; j++) {
-                newchild[j] = newchild[j + 1]
-              }
-              newchild[newchild.length - 1] = ""
-              break;
-            }
-          }
-          db.collection("File").doc(res.data.father).update({
-            data: {
-              child: newchild
-            }
-          })
-        }).then(res => {
-          console.log("fatherchanged")
-        })
-        db.collection("File").doc(res.data._id).update({
-          data: {
-            father: app.globalData.currentFolderId
-          }
-        }).then(res2 => {
-          console.log("move success")
-        })
-        console.log(app.globalData.currentFolderId)
-      })
-    }
+    wx.redirectTo({
+      url: '../actionMode/actionMode?id=root&operateType=移动&operateId=' + this.data.result,
+    })
   },
   copy() {
-    const db = wx.cloud.database();
-    for (var i = 0; i < this.data.result.length; i++) {
-      db.collection("File").doc(this.data.result[i]).get().then(res => {
-        db.collection("File").add({
-          data: {
+    wx.redirectTo({
+      url: '../actionMode/actionMode?id=root&operateType=复制&operateId=' + this.data.result,
+    })
+    // const db = wx.cloud.database()
+    // for (var i = 0; i < this.data.result.length; i++) {
+    //   db.collection("File").doc(this.data.result[i]).get().then(res => {
+    //     db.collection("File").add({
+    //       data: {
 
-          }
-        }).then(res => {
+    //       }
+    //     }).then(res => {
 
-        })
-      })
-    }
+    //     })
+    //   })
+    // }
   },
   remove() {
     const db = wx.cloud.database();
@@ -663,14 +637,14 @@ Page({
       this.setData({
         result: this.data.resultAll,
         chooseAll: "取消",
-        count:this.data.resultAll.length
+        count: this.data.resultAll.length
       })
     } else if (this.data.chooseAll === "取消") {
       this.setData({
-          result: [],
-          chooseAll: "全选",
-          actionShow:false,
-          count:0
+        result: [],
+        chooseAll: "全选",
+        actionShow: false,
+        count: 0
       })
     }
   },

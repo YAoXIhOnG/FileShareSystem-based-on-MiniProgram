@@ -3,7 +3,9 @@
     "pages/index/index",
     "pages/user/user",
     "pages/folder/folder",
-    "pages/file/file"
+    "pages/file/file",
+    "pages/actionMode/actionMode",
+    "pages/test/test"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

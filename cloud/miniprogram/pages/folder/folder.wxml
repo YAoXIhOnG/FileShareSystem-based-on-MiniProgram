@@ -9,7 +9,7 @@
   <view style="width:80rpx;height:80rpx;display:flex;align-items:center;">
     <van-icon name="plus" size="60rpx" bind:click="onToolShow" />
   </view>
-</view> 
+</view>  
  
 <view>
   <scroll-view scroll-y style="height:{{height}};">
@@ -83,7 +83,7 @@
 
 <van-popup position="bottom" z-index="101" overlay="{{false}}" show="{{ actionShow }}" bind:close="onActionClose">
   <view class="actionPopupBottom">
-    <button bindtap="move">移动到……</button>
+    <button bindtap='move'>移动到……</button>
     <button bindtap="copy">复制到……</button>
     <button bindtap="remove">删除</button>
     <button bindtap="onshowRename" disabled="{{reNameAble}}">重命名</button>
